@@ -1,16 +1,12 @@
 # Air Quality Analysis Dashboard
 
-A comprehensive dashboard for analyzing air quality monitoring stations and pollution data across different countries. Built with Python and Streamlit, this application provides advanced analytics, visualizations, and machine learning capabilities for air quality data analysis.
+Interactive dashboard for analyzing air quality monitoring stations across multiple countries. Built with Python, Streamlit and advanced geospatial analysis.
 
 ## Features
-
-- Station density analysis and mapping
-- Advanced statistical analysis and trend detection
-- Interactive 3D pollution maps and heatmaps
-- Machine learning predictions and clustering
-- Time series analysis and forecasting
-- Data quality validation and cleaning
-- Automated testing suite
+- Interactive station density maps and visualizations
+- Comparative country analysis
+- Geographic distribution insights
+- PM10 monitoring station analytics
 
 
 ## Installation
@@ -31,7 +27,7 @@ pip install -r requirements.txt
 
 ## Running the Dashboard
 ```bash
-streamlit run air_quality_dashboard/src/main.py
+streamlit run src/main.py
 ```
 
 ## Requirements
