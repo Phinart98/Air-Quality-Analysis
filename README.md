@@ -1,6 +1,6 @@
 # Air Quality Analysis Dashboard
 
-Interactive dashboard for analyzing air quality monitoring stations across multiple countries. Built with Python, Streamlit and advanced geospatial analysis.
+Interactive dashboard for analyzing air quality monitoring stations across multiple countries. Built with Python, Streamlit and advanced geospatial analysis. You can access the dashboard [here](https://airqualityanalyzer.streamlit.app/).
 
 ## Features
 - Interactive station density maps and visualizations
