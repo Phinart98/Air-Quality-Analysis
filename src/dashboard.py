@@ -7,6 +7,7 @@ import pandas as pd
 import geopandas as gpd
 import requests
 from datetime import datetime, timedelta
+from time_series import add_time_series_section
 
 def get_pollutant_info():
     return {
@@ -111,10 +112,11 @@ def create_dashboard():
         stations_gdf = load_data(selected_countries)
     
     # Main content tabs
-    tab1, tab2, tab3 = st.tabs([
+    tab1, tab2, tab3, tab4 = st.tabs([
         "Network Overview",
         "Station Distribution",
-        "Pollutant Analysis"
+        "Pollutant Analysis",
+        "Time Series Analysis"
     ])
     
     with tab1:
@@ -245,6 +247,9 @@ def create_dashboard():
         )
         fig.update_layout(bargap=0.1)
         st.plotly_chart(fig, use_container_width=True)
+        
+    with tab4:
+        add_time_series_section(stations_gdf, pollutant_info)
 
 if __name__ == "__main__":
     create_dashboard()
