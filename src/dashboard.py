@@ -7,6 +7,7 @@ import pandas as pd
 import geopandas as gpd
 import requests
 from datetime import datetime, timedelta
+from data_export import add_export_section, export_map_as_html
 from time_series import add_time_series_section
 
 def get_pollutant_info():
@@ -66,7 +67,6 @@ def fetch_station_data(countries=None):
     except ValueError:
         st.error("Invalid response format. Could not parse JSON.")
         return {"type": "FeatureCollection", "features": []}
-
 
 @st.cache_data(ttl=3600)
 def load_data(selected_countries):
@@ -167,6 +167,9 @@ def create_dashboard():
         # Display full-width map
         st.components.v1.html(m._repr_html_(), height=600)
         
+        # Add map export option
+        export_map_as_html(m, filename=f"air_quality_map_{datetime.now().strftime('%Y%m%d')}.html")
+        
         # Pollutant legend
         st.markdown("### Monitored Pollutants Information")
         cols = st.columns(2)
@@ -200,6 +203,9 @@ def create_dashboard():
         )
         st.plotly_chart(fig, use_container_width=True)
         
+        # Add export functionality for country data
+        add_export_section(country_data, section_name="country_distribution")
+        
         # City-level analysis
         st.subheader("City-level Distribution")
         selected_country = st.selectbox(
@@ -221,6 +227,9 @@ def create_dashboard():
                 title=f'Monitoring Station Distribution in {selected_country}'
             )
             st.plotly_chart(fig, use_container_width=True)
+            
+            # Add export functionality for city data
+            add_export_section(city_counts, section_name="city_distribution")
     
     with tab3:
         st.subheader("Pollutant Coverage Analysis")
@@ -248,6 +257,9 @@ def create_dashboard():
         fig.update_layout(bargap=0.1)
         st.plotly_chart(fig, use_container_width=True)
         
+        # Add export functionality for pollutant data
+        add_export_section(pollutant_df, section_name="pollutant_analysis")
+    
     with tab4:
         add_time_series_section(stations_gdf, pollutant_info)
 
