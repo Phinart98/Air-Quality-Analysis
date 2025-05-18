@@ -3,8 +3,9 @@ import plotly.express as px
 import streamlit as st
 import requests
 from datetime import datetime, timedelta
-import math
 import random
+import math
+from data_export import add_export_section
 
 def fetch_historical_data(station_id, pollutant, days=30):
     """
@@ -100,7 +101,6 @@ def fetch_historical_data(station_id, pollutant, days=30):
         })
         mock_df = mock_df.set_index('datetime')
         return mock_df
-
 
 def plot_time_series(df, pollutant_info):
     """
@@ -212,6 +212,9 @@ def add_time_series_section(stations_gdf, pollutant_info):
         fig = plot_time_series(df, pollutant_info)
         if fig:
             st.plotly_chart(fig, use_container_width=True)
+            
+            # Add export functionality for time series data
+            add_export_section(df, section_name=f"timeseries_{selected_pollutant}")
             
             # Basic statistics
             st.subheader("Statistical Summary")

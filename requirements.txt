@@ -7,4 +7,5 @@ streamlit-folium
 requests
 shapely
 pycountry
+xlsxwriter
 
