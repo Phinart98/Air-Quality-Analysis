@@ -48,8 +48,24 @@ def fetch_station_data(countries=None):
     params = {"format": "geojson"}
     if countries:
         params["country"] = ",".join(countries)
-    response = requests.get(base_url, params=params)
-    return response.json()
+    
+    try:
+        response = requests.get(base_url, params=params, timeout=10)
+        response.raise_for_status()  # Raise an exception for HTTP errors
+        return response.json()
+    except requests.exceptions.Timeout:
+        st.error("Request timed out. The server might be experiencing high load.")
+        return {"type": "FeatureCollection", "features": []}
+    except requests.exceptions.HTTPError as e:
+        st.error(f"HTTP Error: {e}")
+        return {"type": "FeatureCollection", "features": []}
+    except requests.exceptions.RequestException as e:
+        st.error(f"Error fetching data: {e}")
+        return {"type": "FeatureCollection", "features": []}
+    except ValueError:
+        st.error("Invalid response format. Could not parse JSON.")
+        return {"type": "FeatureCollection", "features": []}
+
 
 @st.cache_data(ttl=3600)
 def load_data(selected_countries):
